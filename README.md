@@ -1,27 +1,28 @@
-# Tarefa
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.3.
+# FATTO
 
-## Development server
+Usando Angular e Spring boot, esse é um sistema web para cadastro de Tarefas. Esta API deve permitir: 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Criar uma tarefa
 
-## Code scaffolding
+- Editar uma tarefa
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Listar tarefas
 
-## Build
+- Excluir uma tarefa
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Reordenação da tarefa
 
-## Running unit tests
+    Com o uso do mouse, o usuário arrasta uma tarefa para cima ou para baixo, soltando na posição desejada. Estilo drag-and-drop.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Reordenação da tarefa
 
-## Running end-to-end tests
+    Em cada linha (registro) deve ter dois botões, uma para "subir" a tarefa na ordem de apresentação e outro para "descer". Obviamente a primeira tarefa não poderá "subir" e nem a última poderá "descer".
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+- Link para acompanhar o banco de dados H2
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+    http://localhost:8080/h2-console/
+
+    Senha: sa
+    Password: password
