@@ -1,0 +1,148 @@
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center mt-4 mb-4" routerLink="" routerLinkActive="active">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fa fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">
+              <a class="navbar-brand" >
+                <h1>FATTO</h1>
+              </a>
+            </div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseTwo">
+                <!--<i class="fa fa-fw fa-cog"></i>-->
+                <i class="fa fa-tasks fa-sm fa-fw mr-2 text-gray-400"></i>
+                <span>Listar Tarefas</span>
+                <i class="fa fa-angle-right icone"></i>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" (click)="addTask()">Incluir tarefa</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Content Row -->
+
+                <div class="row">                    
+                    <!-- Area Chart -->
+                    <div class="col-xl-12 col-lg-11">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div
+                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> 
+                                <h6 class="m-0 font-weight-bold text-primary">Listar Tarefas</h6>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <div class="table-responsive-sm">                                        
+                                        <table class="table table-striped">
+                                            <thead class="thead-light">
+                                              <tr>
+                                                <th scope="col">Id</th>
+                                                <th scope="col">Nome</th>
+                                                <th scope="col">Custo</th>
+                                                <th scope="col">Data Limite</th>
+                                                <th scope="col">
+                                                    <a class="d-none d-sm-inline-block">
+                                                        <i class="fa fa-arrow-up fa-sm mr-2"></i>
+                                                    </a>
+                                                    <a class="d-none d-sm-inline-block">
+                                                        <i class="fa fa-arrow-down fa-sm"></i>
+                                                    </a>
+                                                </th>
+                                                <th scope="col">Ações</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody cdkDropList (cdkDropListDropped)="reOrdemList($event)">
+                                              <tr *ngFor="let item of tarefas; let i = index" [ngClass]="{'task-destacada': item.custo >= 1000}" cdkDrag>
+                                                <th scope="row">{{ i + 1 }}</th>
+                                                <td>{{ item.nome }}</td>
+                                                <td>{{ item.custo }}</td>
+                                                <td>{{ item.dtLimite | date:'dd/MM/yyyy' }}</td>
+                                                <td>
+                                                    <ng-container *ngIf="i !== 0">
+                                                        <a class="d-none d-sm-inline-block" (click)="upTask(i)">
+                                                            <i class="fa fa-arrow-up fa-sm mr-2"></i>
+                                                        </a>
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="i !== tarefas.length - 1">
+                                                        <a class="d-none d-sm-inline-block" (click)="downTask(i)">
+                                                            <i class="fa fa-arrow-down fa-sm"></i>
+                                                        </a>
+                                                    </ng-container>
+                                                </td>
+                                                <td class="d-flex justify-content-end">
+                                                    <a class="d-none d-sm-inline-block" (click)="editTask(i, item)">
+                                                        <i class="fa fa-edit fa-sm" matTooltip="Editar"></i>
+                                                    </a>
+                                                    <a class="d-none d-sm-inline-block" (click)="deleteTask(i, item)">
+                                                        <i class="fa fa-trash fa-sm" matTooltip="Deletar"></i>
+                                                    </a>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-end mb-4">
+                    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm text-white" (click)="addTask()"><i
+                            class="fa fa-plus fa-sm text-white"></i> Incluir</a>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>2023 Copyright &copy; Tarefa</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
