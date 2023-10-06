@@ -8,7 +8,7 @@ import { Tarefas } from '../model/Tarefas.model';
 })
 export class DashboardService {
 
-  public API = 'https://api-fatto-f0fedcf2976d.herokuapp.com';
+  public API = 'http://localhost:8080';
   public CONTROLLER = this.API + '/tasks';
 
   constructor(private http: HttpClient) { }
