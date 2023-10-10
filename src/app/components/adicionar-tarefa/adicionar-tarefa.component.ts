@@ -1,11 +1,12 @@
 
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { Tarefas } from 'src/app/model/Tarefas.model';
 import { AlertModalService } from 'src/app/services/alert-modal.service';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 @Component({
     selector: 'app-adicionar-tarefa',
@@ -28,6 +29,8 @@ export class AddTarefaComponent implements OnInit {
 
     campoNome!: string | null;
 
+    custoFieldBlurred = false;
+
     constructor(
         private fb: FormBuilder,
         public dialogRef: MatDialogRef<AddTarefaComponent>, private alertModalService: AlertModalService,
@@ -46,14 +49,35 @@ export class AddTarefaComponent implements OnInit {
     ngOnInit() {
 
         this.form = this.fb.group({
-            nome: ['', [Validators.required]],
-            custo: ['', [Validators.required]],
-            dtLimite: ['', [Validators.required]],
+            nome: ['', [Validators.required, Validators.maxLength(255)]],
+            custo: ['', [Validators.required, this.custoValidator()]],
+            dtLimite: ['', [Validators.required, this.dataValida]],
         });
     }
 
     fecharCadastrarDialog(): void{
         this.dialogRef.close();
+    }
+
+    
+    dataValida(control: FormControl) {
+        const inputDate = new Date(control.value);
+        
+        
+        if (isNaN(inputDate.getTime())) {
+        return { dataInvalida: true };
+        }
+    
+        return null;
+    }
+
+    custoValidator(): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            if (control.value !== null && control.value > 999999999999) {
+                return { custoExcedido: true };
+            }
+            return null;
+        };
     }
 
     submit(form: any) {
@@ -79,7 +103,8 @@ export class AddTarefaComponent implements OnInit {
                     }
                 })
             }else{
-                this.dashboardService.editTask(this.oldName, this.tarefa).subscribe(data => {
+                const nomeTarefa = encodeURIComponent(this.oldName);
+                this.dashboardService.editTask(nomeTarefa, this.tarefa).subscribe(data => {
                     if(data.body.success){
                         this.tarefa.id = data.body.id;
                         this.tarefa.nome = data.body.nome;

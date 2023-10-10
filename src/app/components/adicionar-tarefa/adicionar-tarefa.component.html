@@ -13,18 +13,29 @@
                 <div class="form-outline formatar-mat-form">
                     <label class="form-label" for="form2Example1">Nome</label>
                     <!-- <mat-form-field> -->
-                    <input matInput formControlName="nome" [(ngModel)]="tarefa.nome" type="text" id="form2Example1" class="form-control" />                    
+                    <input matInput formControlName="nome" [(ngModel)]="tarefa.nome" type="text" id="form2Example1" class="form-control" />  
+                    <div *ngIf="form.controls['nome']?.dirty || form.controls['nome']?.touched">                 
+                        <mat-error class="erro" *ngIf="form.get('nome').hasError('required')">O campo nome é obrigatório.</mat-error>
+                    </div> 
                 </div>
                 <!-- Custo input -->
                 <div class="form-outline formatar-mat-form">
                     <label class="form-label" for="form2Example1">Custo</label>
                     <!-- <mat-form-field> -->
-                    <input matInput formControlName="custo" [(ngModel)]="tarefa.custo" type="float" minlength="0.00" aria-label="Amount" id="form2Example1" class="form-control" />                    
+                    <input matInput formControlName="custo" [(ngModel)]="tarefa.custo" type="float" minlength="0.00" maxlength="999999999999" aria-label="Amount" id="form2Example1" class="form-control" />                    
+                    <div *ngIf="form.controls['custo']?.dirty || form.controls['custo']?.touched">
+                        <mat-error class="erro" *ngIf="form.get('custo').hasError('required')">O campo custo é obrigatório.</mat-error>
+                        <mat-error class="erro" *ngIf="form.get('custo').hasError('custoExcedido')">O valor do custo está fora do intervalo aceitável.</mat-error>
+                    </div>
                 </div>
                 <!-- Data Limite input -->
                 <div class="form-outline formatar-mat-formC" style="position: relative;">
                     <label class="form-label" for="form2Example4">Data Limite</label>
                     <input matInput formControlName="dtLimite" type="date" required [(ngModel)]="tarefa.dtLimite" placeholder="ex: 00/00/0000" [disabled]="disableBox" id="form2Example4" class="form-control" />                    
+                    <div *ngIf="form.controls['dtLimite']?.dirty || form.controls['dtLimite']?.touched">
+                        <mat-error class="erro" *ngIf="form.get('dtLimite').hasError('required')">O campo data limite é obrigatório.</mat-error>
+                        <mat-error class="erro" *ngIf="form.get('dtLimite').hasError('dataInvalida')">Data inválida, verifique o formato.</mat-error>
+                    </div>
                 </div>
             </div>
             </mat-dialog-content>
